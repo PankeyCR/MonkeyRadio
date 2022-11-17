@@ -1,16 +1,36 @@
 
+#ifndef CONFIGURATION_LoRaNetwork_hpp
+#define CONFIGURATION_LoRaNetwork_hpp
+
+	#include "ame_Enviroment.hpp"
+
+	#if defined(DISABLE_LoRaNetwork)
+		#define LoRaNetwork_hpp
+
+		#define IMPLEMENTATION_LoRaNetwork
+		#define IMPLEMENTING_LoRaNetwork
+	#else
+		#if defined(DISABLE_IMPLEMENTATION_LoRaNetwork)
+			#define IMPLEMENTATION_LoRaNetwork
+			#define IMPLEMENTING_LoRaNetwork
+		#endif
+	#endif
+#endif
+
 #ifndef LoRaNetwork_hpp
 #define LoRaNetwork_hpp
 #define LoRaNetwork_AVAILABLE
+
+#ifndef DISABLE_IMPLEMENTATION_LoRaNetwork
+	#define IMPLEMENTATION_LoRaNetwork IMPLEMENTATION(public LoRaNetwork)
+	#define IMPLEMENTING_LoRaNetwork IMPLEMENTING(public LoRaNetwork)
+#endif
 
 #include "RadioNetwork.hpp"
 #include "Class.hpp"
 #include "Note.hpp"
 #include "ByteArray.hpp"
 #include "MessageDelivery.hpp"
-
-#include <SPI.h>
-#include <LoRa.h>
 
 #ifdef LoRaNetwork_LogApp
 	#include "ame_Logger_config.hpp"
@@ -36,10 +56,18 @@
 
 namespace ame{
 
-class LoRaNetwork : public RadioNetwork {	
+/*
+*	Class Configuration:
+*	DISABLE_cppObjectClass
+*/
+class LoRaNetwork IMPLEMENTATION_RadioNetwork {	
     public:
 		LoRaNetwork(){}
 		virtual ~LoRaNetwork(){}
+		    
+		virtual void sendRadio(Note a_send){
+			
+		}
 			
 		#if defined(cppObject_AVAILABLE) && defined(cppObjectClass_AVAILABLE) && defined(Class_AVAILABLE)
 		virtual cppObjectClass* getClass(){
@@ -48,8 +76,8 @@ class LoRaNetwork : public RadioNetwork {
 		
 		virtual bool instanceof(cppObjectClass* cls){
 			return cls == Class<LoRaNetwork>::getClass()
-			#if defined(RadioNetwork_AVAILABLE)
-			|| RadioNetwork::instanceof(cls)
+			#if defined(AppState_AVAILABLE)
+			|| AppState::instanceof(cls)
 			#endif
 			;
 		}

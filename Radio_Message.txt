@@ -1,0 +1,27 @@
+	
+		
+		lora->sendRadioByIp('$', '2', "hola");
+		
+		
+		<$*412hola>
+		
+		< 		inicio de mensaje
+		$		uuid del mensaje
+		*		commando para enviar un mensaje
+		4		tamaño del mensaje
+		1		id del puerto a quien se envia
+		2		id del puerto quien recibe 
+		hola	mensaje
+		>		fin de mensaje
+		
+		
+		
+		<$/1>
+		
+		< 		inicio de mensaje
+		$		uuid del mensaje
+		/		commando de confirmacion
+		1		id origen
+		>		fin de mensaje
+		
+		
