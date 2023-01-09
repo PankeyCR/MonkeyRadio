@@ -1,13 +1,69 @@
+
+radio_UDP	1. message is sent to one port
+			2. no one sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message is sent
+
+radio_UDPB	1. message is sent to everyone
+			2. no one sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message is sent
+
+radio_TCP	1. message is sent to one port
+			2. that port sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message is sent
+			5. if the sent message has no confirmation will try to send it 4 times on a intervale of time
+
+radio_TCPB	1. message is sent to one port and everyone can hear the message
+			2. that port sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message is sent
+			5. if the sent message has no confirmation will try to send it 4 times on a intervale of time
+
+radio_NRSC	1. message is sent to one port
+			2. that port sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message and the cofirmation is sent
+			5. if the sent message has no confirmation will send a no delivery message and after that anyone can go next
+
+radio_NRSCB	1. message is sent to one port and everyone can hear the message
+			2. that port sends a confirmation
+			3. the sender doesnt send a final confirmation
+			4. anyone can send a message after this message and the cofirmation is sent
+			5. if the sent message has no confirmation will send a no delivery message and after that anyone can go next
+
+radio_SC	1. message is sent to one port
+			2. that port sends a confirmation
+			3. the sender sends a final confirmation
+			4. anyone can send a message after this message and the cofirmation is sent
+			5. if the sent message has no confirmation will not try to re send it
+
+radio_SCB	1. message is sent to one port and everyone can hear the message
+			2. that port sends a confirmation
+			3. the sender sends a final confirmation
+			4. anyone can send a message after this message and the cofirmation is sent
+			5. if the sent message has no confirmation will not try to re send it
+
+Example send:
+
+	{
+		char uuid = '$';
+		char command = radio_TCP;	//radio_UDP, radio_TCP, radio_SC, radio_SCB, radio_NCB
+		char puerto = '2';
+		Note mensaje = "hola")
+		
+		lora->sendRadio(uuid, command, puerto, mensaje);
+	}
 	
+	
+		Mensaje de salida: radio_TCP = 'C'
 		
-		lora->sendRadioByIp('$', '2', "hola");
-		
-		
-		<$*412hola>
+		<$C412hola>
 		
 		< 		inicio de mensaje
 		$		uuid del mensaje
-		*		commando para enviar un mensaje
+		C		commando para enviar un mensaje tcp
 		4		tamaño del mensaje
 		1		id del puerto a quien se envia
 		2		id del puerto quien recibe 
@@ -15,13 +71,13 @@
 		>		fin de mensaje
 		
 		
+		Mensaje de confimacion: radio_confirmation_TCP = 'P'
 		
-		<$/1>
+		<$P1>
 		
 		< 		inicio de mensaje
 		$		uuid del mensaje
-		/		commando de confirmacion
+		P		commando de confirmacion tcp
 		1		id origen
 		>		fin de mensaje
-		
 		
